@@ -1,2 +1,2 @@
-# Ecommerce
-Bài Tập Lớn CCNLTHĐ
+# CS2201CourseApp
+Demo of Modern Technologies
