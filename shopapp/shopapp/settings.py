@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'shops.apps.ShopsConfig',
     'ckeditor',
     'ckeditor_uploader',
+    'debug_toolbar',
+    'rest_framework',
+    'drf_yasg'
 ]
 import pymysql
 pymysql.install_as_MySQLdb()
@@ -54,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'shopapp.urls'
@@ -92,6 +96,9 @@ DATABASES = {
 
     }
 }
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
 AUTH_USER_MODEL = 'shops.User'
 
 MEDIA_ROOT = '%s/shops/static/' % BASE_DIR

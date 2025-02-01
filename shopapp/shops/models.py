@@ -30,7 +30,7 @@ class Shop(BaseModel):
     shop_name = models.CharField(max_length=255, null=False)
     description = RichTextField()
     image = models.ImageField( upload_to='shops/%Y/%m')
-    category = models.ForeignKey(Category, on_delete=models.RESTRICT)
+    category = models.ForeignKey(Category, on_delete=models.RESTRICT, related_name='shops')
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     tags = models.ManyToManyField('Tag')
 
@@ -45,9 +45,12 @@ class Product(BaseModel):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, null=False)
     description = RichTextField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=10, decimal_places=0)
     image = models.ImageField(upload_to='products/%Y/%m')
     tags = models.ManyToManyField('Tag')
+
+    def __str__(self):
+        return self.name
 
 
 

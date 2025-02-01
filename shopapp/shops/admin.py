@@ -1,6 +1,34 @@
+from string import Template
+
 from django.contrib import admin
+from django.template.response import TemplateResponse
+
 from .models import Category, Shop, Product, Tag
 from django.utils.html import mark_safe
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from django import forms
+from django.urls import path
+from shops import dao
+
+
+class ShopAppAdminSite(admin.AdminSite):
+    site_header = 'iShop'
+
+
+    def get_urls(self):
+        return [
+            path('shop-stats/', self.stats_view)
+        ] +  super().get_urls()
+
+    def stats_view(self, request):
+        return TemplateResponse(request, 'admin/stats.html', {
+            'stats': dao.count_shops_by_cate()
+        })
+
+
+
+
+admin_site = ShopAppAdminSite(name='admin_shopapp')
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['pk','name']
@@ -8,8 +36,25 @@ class CategoryAdmin(admin.ModelAdmin):
     list_filter =['id', 'name']
 
 
+class ShopForm(forms.ModelForm):
+    description = forms.CharField(widget=CKEditorUploadingWidget())
+
+    class Meta:
+        model = Shop
+        fields = '__all__'
+
+
+class TagInlineAdmin(admin.StackedInline):
+    model = Shop.tags.through
+
+
+
+
 class ShopAdmin(admin.ModelAdmin):
+    list_display = ['pk','shop_name','created_date','updated_date','category','active',]
     readonly_fields = ['img']
+    inlines = [TagInlineAdmin]
+    form = ShopForm
 
     def img(self, shops):
         if shops:
@@ -24,8 +69,8 @@ class ShopAdmin(admin.ModelAdmin):
         }
 
 
-admin.site.register(Category, CategoryAdmin)
-admin.site.register(Shop, ShopAdmin)
-admin.site.register(Product)
-admin.site.register(Tag)
+admin_site.register(Category, CategoryAdmin)
+admin_site.register(Shop, ShopAdmin)
+admin_site.register(Product)
+admin_site.register(Tag)
 
