@@ -13,10 +13,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 
 from django.conf.global_settings import MEDIA_ROOT
+from oauthlib.common import CLIENT_ID_CHARACTER_SET
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -28,7 +28,6 @@ SECRET_KEY = 'django-insecure-l-5(^cir=go6x5$zm*0-^uiig-rjaxku#$sb19fyv@$nd%oli^
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -44,9 +43,12 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'debug_toolbar',
     'rest_framework',
-    'drf_yasg'
+    'drf_yasg',
+    'cloudinary',
+    'oauth2_provider'
 ]
 import pymysql
+
 pymysql.install_as_MySQLdb()
 
 MIDDLEWARE = [
@@ -59,6 +61,19 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
+
+import cloudinary
+import cloudinary.uploader
+from cloudinary.utils import cloudinary_url
+
+# Configuration
+cloudinary.config(
+    cloud_name="dwd4b8lcx",
+    api_key="271116451416351",
+    api_secret="fbyd8zzUl4OSzBFxkf4_cr4jNTk",  # Click 'View API Keys' above to copy your API secret
+    secure=True
+)
+APPEND_SLASH = False
 
 ROOT_URLCONF = 'shopapp.urls'
 
@@ -80,7 +95,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'shopapp.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -93,7 +107,6 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '3306',
 
-
     }
 }
 INTERNAL_IPS = [
@@ -104,6 +117,12 @@ AUTH_USER_MODEL = 'shops.User'
 MEDIA_ROOT = '%s/shops/static/' % BASE_DIR
 
 CKEDITOR_UPLOAD_PATH = "ckeditor/images/"
+
+REST_FRAMEWORK = {
+'DEFAULT_AUTHENTICATION_CLASSES': (
+    'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+)
+}
 
 
 # Password validation
@@ -124,7 +143,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -136,7 +154,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
@@ -146,3 +163,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+CLIENT_ID = '417goC3U218nrbgpwLSButKOyhRBkP7b7NyAKFfW'
+CLIEN_SECRET = '7FpjbMxNH0x4cCu2pE1Z6rt95o6GUG0QWUWbDFijQ2ho0FrKmKLdKFgfHlAXHOA46NKgMi43yc2YDYbJomfGYZLg3J7bdP2I7LzGfIbx0AQrN9g5LPo0CEQWMJv8cLBh'

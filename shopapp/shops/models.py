@@ -1,9 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from ckeditor.fields import RichTextField
+from cloudinary.models import CloudinaryField
+
+
 
 class User(AbstractUser):
-    pass
+    avatar = CloudinaryField('avatar', null=True, blank=True)
 
 
 class BaseModel(models.Model):
@@ -60,6 +63,31 @@ class Tag(BaseModel):
 
     def __str__(self):
         return self.name
+
+
+class Interaction(BaseModel):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null= False)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=False)
+
+
+    class Meta:
+        abstract = True
+
+
+class Comment(Interaction):
+    content = models.CharField(max_length=255, null=False)
+
+    def __str__(self):
+        return self.content
+
+class Like(Interaction):
+    active = models.BooleanField()
+
+
+class Rating(Interaction):
+    rate = models.SmallIntegerField(default=0)
+
+
 
 
 

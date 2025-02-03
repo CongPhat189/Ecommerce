@@ -37,6 +37,9 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('', include('shops.urls')),
     path('admin/', admin_site.urls),
+    path('o/', include('oauth2_provider.urls',
+                       namespace='oauth2_provider')),
+
     re_path(r'^ckeditor', include('ckeditor_uploader.urls')),
     path('debug/', include('debug_toolbar.urls')),
 
@@ -45,9 +48,9 @@ urlpatterns = [
             name='schema-json'),
     re_path(r'^swagger/$',
             schema_view.with_ui('swagger', cache_timeout=0),
-    name = 'schema-swagger-ui'),
+            name='schema-swagger-ui'),
     re_path(r'^redoc/$',
-        schema_view.with_ui('redoc', cache_timeout=0),
-        name='schema-redoc')
+            schema_view.with_ui('redoc', cache_timeout=0),
+            name='schema-redoc')
 
 ]
