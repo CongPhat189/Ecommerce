@@ -2,8 +2,10 @@ from string import Template
 
 from django.contrib import admin
 from django.template.response import TemplateResponse
+from django.contrib.auth.models import Group, Permission
+from django.contrib.contenttypes.models import ContentType
 
-from .models import Category, Shop, Product, Tag
+from .models import Category, Shop, Product, Tag, User
 from django.utils.html import mark_safe
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django import forms
@@ -69,8 +71,16 @@ class ShopAdmin(admin.ModelAdmin):
         }
 
 
+
+admin.site.register(User)
+admin.site.register(Shop)
+admin.site.register(Product)
 admin_site.register(Category, CategoryAdmin)
 admin_site.register(Shop, ShopAdmin)
 admin_site.register(Product)
 admin_site.register(Tag)
+admin_site.register(User)
+
+
+
 

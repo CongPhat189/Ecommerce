@@ -24,8 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-l-5(^cir=go6x5$zm*0-^uiig-rjaxku#$sb19fyv@$nd%oli^'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# SECURITY W
+# ARNING: don't run with debug turned on in production!
 DEBUG = True
+
 
 ALLOWED_HOSTS = []
 
@@ -43,6 +45,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'debug_toolbar',
     'rest_framework',
+    'rest_framework.authtoken',
     'drf_yasg',
     'cloudinary',
     'oauth2_provider'
@@ -167,3 +170,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CLIENT_ID = '417goC3U218nrbgpwLSButKOyhRBkP7b7NyAKFfW'
 CLIEN_SECRET = '7FpjbMxNH0x4cCu2pE1Z6rt95o6GUG0QWUWbDFijQ2ho0FrKmKLdKFgfHlAXHOA46NKgMi43yc2YDYbJomfGYZLg3J7bdP2I7LzGfIbx0AQrN9g5LPo0CEQWMJv8cLBh'
+
+
+# OAUTH2_PROVIDER = {
+#     'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore'}

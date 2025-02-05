@@ -22,11 +22,13 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
+
+
 schema_view = get_schema_view(
     openapi.Info(
         title="Shop API",
         default_version='v1',
-        description="APIs for CourseApp",
+        description="APIs for ShopApp",
         contact=openapi.Contact(email="2251012108@phatou.edu.vn"),
         license=openapi.License(name="Trần Công Phát"),
     ),
@@ -39,6 +41,8 @@ urlpatterns = [
     path('admin/', admin_site.urls),
     path('o/', include('oauth2_provider.urls',
                        namespace='oauth2_provider')),
+
+
 
     re_path(r'^ckeditor', include('ckeditor_uploader.urls')),
     path('debug/', include('debug_toolbar.urls')),
